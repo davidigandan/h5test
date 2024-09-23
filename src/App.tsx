@@ -41,7 +41,7 @@ for (let i = 0; i <= xDomainRange; i++) {
 }
 
 yValues = xValues.map((element) => {
-  return Math.sin(element);
+  return Math.sin(element * (Math.PI / 180));
 });
 
 const arrayOfX = xValues;
