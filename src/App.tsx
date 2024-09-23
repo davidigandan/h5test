@@ -51,7 +51,7 @@ function MyApp() {
   return (
     <div style={{ display: "flex", height: "30rem" }}>
       <HeatmapVis dataArray={dataArray} domain={domain} />
-      <br></br>
+
       <VisCanvas
         abscissaConfig={{
           showGrid: true,
@@ -63,13 +63,29 @@ function MyApp() {
         }}
       >
         <DefaultInteractions />
+
         <Line
           abscissas={arrayOfX}
           color="hsla(240, 100%, 50%, 1)"
           ordinates={arrayOfY}
-          visbible
+          visible
         />
       </VisCanvas>
+
+      <button
+        style={{
+          position: "absolute",
+          top: "700px",
+          left: "500px",
+          zIndex: 1,
+          backgroundColor: "white",
+          border: "1px solid #ccc",
+          padding: "5px 10px",
+          cursor: "pointer",
+        }}
+      >
+        Toggle Wave
+      </button>
     </div>
   );
 }
