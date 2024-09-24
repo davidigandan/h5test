@@ -59,6 +59,8 @@ function MyApp() {
         <ResetZoomButton />
       </VisCanvas>
 
+      <SelectionTool></SelectionTool>
+
       <button
         style={{
           position: "absolute",
