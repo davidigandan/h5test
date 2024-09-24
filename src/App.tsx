@@ -1,6 +1,6 @@
 import "@h5web/lib/dist/styles.css";
 
-import React from "react";
+import React, { useState } from "react";
 import ndarray from "ndarray";
 import {
   DefaultInteractions,
@@ -23,31 +23,54 @@ const flatValues: number[] = values.flat(1);
 const dataArray = ndarray(flatValues, [2, 3]);
 const domain = getDomain(dataArray);
 
-// LineVis plotting
-const xvalues = Array.from({ length: 360 }, (x, i) => i);
-const yvalues = Array.from({ length: 360 }, (x, i) => Math.sin(i));
+/* LineVis plotting
+ const xvalues = Array.from({ length: 360 }, (x, i) => i);
+ const yvalues = Array.from({ length: 360 }, (x, i) => Math.sin(i));
 
-const linePlot = [xvalues, yvalues];
+ const linePlot = [xvalues, yvalues];
 
-const flatValuesLine: number[] = linePlot.flat(Infinity) as number[];
+ const flatValuesLine: number[] = linePlot.flat(Infinity) as number[];
 
-// We need a way to programatically defin the x-values and y-values, which will then be passed into the line component.
+ // We need a way to programatically defin the x-values and y-values, which will then be passed into the line component.
 let xValues = [];
-let yValues = [];
-let xDomainRange = 360;
+ let yValues = [];
+ let xDomainRange = 360;
 
-for (let i = 0; i <= xDomainRange; i++) {
-  xValues.push(i);
-}
+ for (let i = 0; i <= xDomainRange; i++) {
+   xValues.push(i);
+ }
 
-yValues = xValues.map((element) => {
-  return Math.sin(element * (Math.PI / 180));
-});
+ yValues = xValues.map((element) => {
+   return Math.sin(element * (Math.PI / 180));
+ });
 
-const arrayOfX = xValues;
-const arrayOfY = yValues;
+ const arrayOfX = xValues;
+ const arrayOfY = yValues;
+*/
+
+// LineVis plotting
 
 function MyApp() {
+  const [mathFunction, changeMathFunction] = useState("sine");
+
+  let toggleFunction = () => {
+    changeMathFunction((prev) => {
+      return prev === "sine" ? "cosine" : "sine";
+    });
+  };
+
+  const generatePoints = (waveType = "sine", points = 360) => {
+    let xValues = Array.from({ length: points }, (_, i) => i);
+    let yValues = xValues.map((xValue) => {
+      return waveType === "sine"
+        ? Math.sin(xValue * (Math.PI / 180))
+        : Math.cos(xValue * (Math.PI / 180));
+    });
+    return [xValues, yValues];
+  };
+
+  const [xValues, yValues] = generatePoints(mathFunction);
+
   return (
     <div style={{ display: "flex", height: "30rem" }}>
       <HeatmapVis dataArray={dataArray} domain={domain} />
@@ -65,9 +88,9 @@ function MyApp() {
         <DefaultInteractions />
 
         <Line
-          abscissas={arrayOfX}
+          abscissas={xValues}
           color="hsla(240, 100%, 50%, 1)"
-          ordinates={arrayOfY}
+          ordinates={yValues}
           visible
         />
       </VisCanvas>
@@ -75,14 +98,15 @@ function MyApp() {
       <button
         style={{
           position: "absolute",
-          top: "700px",
-          left: "500px",
+          top: "900px",
+          left: "900px",
           zIndex: 1,
           backgroundColor: "white",
           border: "1px solid #ccc",
           padding: "5px 10px",
           cursor: "pointer",
         }}
+        onClick={toggleFunction}
       >
         Toggle Wave
       </button>
