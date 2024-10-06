@@ -36,31 +36,46 @@ function MyApp() {
   // const [selectedPoints, changeSelectedPoints] = useState({ x: 0, y: 0 });
 
   return (
-    <div style={{ display: "flex", height: "30rem" }}>
-      <VisCanvas
-        abscissaConfig={{
-          showGrid: true,
-          visDomain: [0, 360],
-        }}
-        ordinateConfig={{
-          showGrid: true,
-          visDomain: [-1, 1],
-        }}
-        title="H5Web/lib Demo with Trig Functions"
-      >
-        <DefaultInteractions />
+    <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
+      <div>
+        <header
+          style={{
+            backgroundColor: "#f0f0f0",
+            padding: "1rem",
+            textAlign: "center",
+            position: "sticky",
+            top: 0,
+            zIndex: 1000,
+          }}
+        >
+          <h2>A Demo of Features 1 & 3</h2>
+        </header>
+      </div>
+      <br></br>
+      <div>
+        <VisCanvas
+          abscissaConfig={{
+            showGrid: true,
+            visDomain: [0, 360],
+          }}
+          ordinateConfig={{
+            showGrid: true,
+            visDomain: [-1, 1],
+          }}
+          title="H5Web/lib Demo with Trig Functions"
+        >
+          <DefaultInteractions />
 
-        <Line
-          abscissas={xValues}
-          color="hsla(240, 100%, 50%, 1)"
-          ordinates={yValues}
-          visible
-        />
-        <ResetZoomButton />
+          <Line
+            abscissas={xValues}
+            color="hsla(240, 100%, 50%, 1)"
+            ordinates={yValues}
+            visible
+          />
+          <ResetZoomButton />
 
-
-        {/* Attempt at Slection Tool */}
-        {/* <SelectionTool
+          {/* Attempt at Slection Tool */}
+          {/* <SelectionTool
           id="my-selection-tool"
           onSelectionStart={() => console.log("Selection started")}
           onSelectionChange={(selection, rawSelection, isValid) => {
@@ -81,25 +96,31 @@ function MyApp() {
             </div>
           )}
         </SelectionTool> */}
-      </VisCanvas>
+        </VisCanvas>
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            marginTop: "1rem",
+          }}
+        >
+          <button
+            style={{
+              marginTop: "1rem",
+              backgroundColor: "white",
+              border: "1px solid #ccc",
+              padding: "10px 20px",
+              cursor: "pointer",
+            }}
+            onClick={toggleFunction}
+          >
+            Toggle Wave
+          </button>
+        </div>
+      </div>
 
       {/* <SelectionTool></SelectionTool> */}
-
-      <button
-        style={{
-          position: "absolute",
-          top: "900px",
-          left: "900px",
-          zIndex: 1,
-          backgroundColor: "white",
-          border: "1px solid #ccc",
-          padding: "5px 10px",
-          cursor: "pointer",
-        }}
-        onClick={toggleFunction}
-      >
-        Toggle Wave
-      </button>
     </div>
   );
 }
