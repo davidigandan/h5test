@@ -6,23 +6,23 @@ import {
   DefaultInteractions,
   Line,
   ResetZoomButton,
-  SelectionTool,
   VisCanvas,
+  SelectionTool,
 } from "@h5web/lib";
 
 function MyApp() {
   // State Handling for function drawn
   const [mathFunction, changeMathFunction] = useState("sine");
 
-  let toggleFunction = () => {
+  const toggleFunction = () => {
     changeMathFunction((prev) => {
       return prev === "sine" ? "cosine" : "sine";
     });
   };
 
   const generatePoints = (waveType = "sine", points = 360) => {
-    let xValues = Array.from({ length: points }, (_, i) => i);
-    let yValues = xValues.map((xValue) => {
+    const xValues = Array.from({ length: points }, (_, i) => i);
+    const yValues = xValues.map((xValue) => {
       return waveType === "sine"
         ? Math.sin(xValue * (Math.PI / 180))
         : Math.cos(xValue * (Math.PI / 180));
@@ -33,7 +33,7 @@ function MyApp() {
   const [xValues, yValues] = generatePoints(mathFunction);
 
   //State Handling for points highlighted
-  const [selectedPoints, changeSelectedPoints] = useState({ x: 0, y: 0 });
+  // const [selectedPoints, changeSelectedPoints] = useState({ x: 0, y: 0 });
 
   return (
     <div style={{ display: "flex", height: "30rem" }}>
@@ -57,9 +57,33 @@ function MyApp() {
           visible
         />
         <ResetZoomButton />
+
+
+        {/* Attempt at Slection Tool */}
+        {/* <SelectionTool
+          id="my-selection-tool"
+          onSelectionStart={() => console.log("Selection started")}
+          onSelectionChange={(selection, rawSelection, isValid) => {
+            console.log("Selection changed:", selection, rawSelection, isValid);
+          }}
+          onSelectionEnd={(selection, isValid) => {
+            console.log("Selection ended:", selection, isValid);
+          }}
+          onValidSelection={(selection) => {
+            console.log("Valid selection made:", selection);
+          }}
+        >
+          {(selection, rawSelection, isValid) => (
+            <div>
+              <p>Current Selection: {JSON.stringify(selection)}</p>
+              <p>Raw Selection: {JSON.stringify(rawSelection)}</p>
+              <p>Is Valid: {isValid ? "Yes" : "No"}</p>
+            </div>
+          )}
+        </SelectionTool> */}
       </VisCanvas>
 
-      <SelectionTool></SelectionTool>
+      {/* <SelectionTool></SelectionTool> */}
 
       <button
         style={{
