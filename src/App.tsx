@@ -8,11 +8,15 @@ import {
   ResetZoomButton,
   VisCanvas,
   SelectionTool,
+  DataCurve,
+  Annotation,
 } from "@h5web/lib";
 
 function MyApp() {
   // State Handling for function drawn
   const [mathFunction, changeMathFunction] = useState("sine");
+
+  // State handling for annotations
 
   const toggleFunction = () => {
     changeMathFunction((prev) => {
@@ -32,50 +36,56 @@ function MyApp() {
 
   const [xValues, yValues] = generatePoints(mathFunction);
 
+  const handleDataPointClick = (index: number, evt: PointerEvent) => {
+    console.log("Event:", evt);
+    console.log("Index:", index);
+  };
+
   //State Handling for points highlighted
   // const [selectedPoints, changeSelectedPoints] = useState({ x: 0, y: 0 });
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
       <div>
-        <header
-          style={{
-            backgroundColor: "#f0f0f0",
-            padding: "1rem",
-            textAlign: "center",
-            position: "sticky",
-            top: 0,
-            zIndex: 1000,
-          }}
-        >
-          <h2>A Demo of Features 1 & 3</h2>
-        </header>
-      </div>
-      <br></br>
-      <div>
-        <VisCanvas
-          abscissaConfig={{
-            showGrid: true,
-            visDomain: [0, 360],
-          }}
-          ordinateConfig={{
-            showGrid: true,
-            visDomain: [-1, 1],
-          }}
-          title="H5Web/lib Demo with Trig Functions"
-        >
-          <DefaultInteractions />
+        <div>
+          <header
+            style={{
+              backgroundColor: "#f0f0f0",
+              padding: "1rem",
+              textAlign: "center",
+              position: "sticky",
+              top: 0,
+              zIndex: 1000,
+            }}
+          >
+            <h2>A Demo of Feature 1: Toggling Trig Functions</h2>
+          </header>
+        </div>
 
-          <Line
-            abscissas={xValues}
-            color="hsla(240, 100%, 50%, 1)"
-            ordinates={yValues}
-            visible
-          />
-          <ResetZoomButton />
+        <div>
+          <VisCanvas
+            abscissaConfig={{
+              showGrid: true,
+              visDomain: [0, 360],
+            }}
+            ordinateConfig={{
+              showGrid: true,
+              visDomain: [-1, 1],
+            }}
+            title="H5Web/lib Demo with Trig Functions"
+          >
+            <DefaultInteractions />
 
-          {/* Attempt at Slection Tool */}
-          {/* <SelectionTool
+            <Line
+              abscissas={xValues}
+              color="hsla(240, 100%, 50%, 1)"
+              ordinates={yValues}
+              visible
+            />
+            <ResetZoomButton />
+
+            {/* Attempt at Slection Tool */}
+            <SelectionTool
           id="my-selection-tool"
           onSelectionStart={() => console.log("Selection started")}
           onSelectionChange={(selection, rawSelection, isValid) => {
@@ -95,32 +105,85 @@ function MyApp() {
               <p>Is Valid: {isValid ? "Yes" : "No"}</p>
             </div>
           )}
-        </SelectionTool> */}
-        </VisCanvas>
+        </SelectionTool>
+          </VisCanvas>
 
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "flex-end",
-            marginTop: "1rem",
-          }}
-        >
-          <button
+          <div
             style={{
-              marginTop: "1rem",
-              backgroundColor: "white",
-              border: "1px solid #ccc",
-              padding: "10px 20px",
-              cursor: "pointer",
+              display: "flex",
+              justifyContent: "flex-end",
+              marginBottom: "2rem",
             }}
-            onClick={toggleFunction}
           >
-            Toggle Wave
-          </button>
+            <button
+              style={{
+                marginTop: "1rem",
+                backgroundColor: "white",
+                border: "1px solid #ccc",
+                padding: "10px 20px",
+                cursor: "pointer",
+              }}
+              onClick={toggleFunction}
+            >
+              Toggle Wave
+            </button>
+          </div>
         </div>
       </div>
+      <div>
+        <header
+          style={{
+            backgroundColor: "#f0f0f0",
+            padding: "1rem",
+            textAlign: "center",
+            position: "sticky",
+            top: 0,
+            zIndex: 1000,
+          }}
+        >
+          <h2>A Demo of Feature 3: Datapoint Annotations with DataCurve</h2>
+        </header>
+        <div>
+          <VisCanvas
+            abscissaConfig={{
+              showGrid: true,
+              visDomain: [0, 40],
+            }}
+            ordinateConfig={{
+              showGrid: true,
+              visDomain: [0, 400],
+            }}
+            raycasterThreshold={6}
+            title="Choose a datapoint"
+          >
+            <DefaultInteractions />
+            <DataCurve
+              abscissas={[
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
+                18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33,
+                34, 35, 36, 37, 38, 39, 40,
+              ]}
+              color="blue"
+              curveType="LineAndGlyphs"
+              errors={[
+                10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+                10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+                10, 10, 10, 10, 10, 10, 10, 10, 10,
+              ]}
+              glyphType="Circle"
+              onDataPointClick={(index, evt) => console.log("trigger")}
+              ordinates={[
+                400, 361, 324, 289, 256, 225, 196, 169, 144, 121, 100, 81, 64,
+                49, 36, 25, 16, 9, 4, 1, 0, 1, 4, 9, 16, 25, 36, 49, 64, 81,
+                100, 121, 144, 169, 196, 225, 256, 289, 324, 361, 400,
+              ]}
+              visible
+            />
 
-      {/* <SelectionTool></SelectionTool> */}
+            <ResetZoomButton />
+          </VisCanvas>
+        </div>
+      </div>
     </div>
   );
 }
