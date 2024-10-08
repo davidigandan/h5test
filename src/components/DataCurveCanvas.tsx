@@ -4,6 +4,8 @@ import {
   DataCurve,
   DefaultInteractions,
   ResetZoomButton,
+  GlyphType,
+  CurveType,
 } from "@h5web/lib";
 
 const DataCurveCanvas: React.FC = () => {
@@ -26,9 +28,9 @@ const DataCurveCanvas: React.FC = () => {
           25, 16, 9, 4, 1, 0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144,
           169, 196, 225, 256, 289, 324, 361, 400,
         ]}
-        glyphType="Circle"
+        glyphType={GlyphType.Circle}
         color="blue"
-        curveType="LineAndGlyphs"
+        curveType={CurveType.LineAndGlyphs}
         visible
         onDataPointClick={(index, evt) => console.log("trigger")}
       />

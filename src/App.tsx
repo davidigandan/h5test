@@ -13,9 +13,15 @@ function App() {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
-      <Header title="A Demo of Feature 1: Toggling Trig Functions" />
+      {/* Feature 1 */}
+      <Header title="Feature 1: Toggling Trig Functions" />
       <TrigCanvas mathFunction={mathFunction} toggleFunction={toggleFunction} />
-      <Header title="A Demo of Feature 3: Datapoint Annotations with DataCurve" />
+
+      {/* Feature 2 */}
+      <Header title="Feature 2: Choosing points with Selection Tool" />
+
+      {/* Feature 3 */}
+      <Header title="Feature 3: Datapoint Annotations with DataCurve" />
       <DataCurveCanvas />
     </div>
   );
