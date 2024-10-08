@@ -6,11 +6,11 @@ interface CuboidProps extends MeshProps {
   color: string; // Define the color prop type
 }
 
-const Cuboid: React.FC<CuboidProps> = ({ color, ...props }) => {
+const Cuboid: React.FC<CuboidProps> = ({ color }) => {
   return (
-    <mesh {...props}>
-      <boxGeometry args={[2, 1, 1]} />
-      <meshStandardMaterial  color={color}/>
+    <mesh>
+      <boxGeometry args={[15, 4, 4]} />
+      <meshStandardMaterial color={color} />
     </mesh>
   );
 };
@@ -26,15 +26,10 @@ const CuboidCanvas: React.FC = () => {
     <div
       style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
-      <input
-        type="color"
-        value={color}
-        onChange={handleColorChange}
-        style={{ marginBottom: "20px" }}
-      />
+      <input type="color" value={color} onChange={handleColorChange} />
       {/* Canvas for the Cuboid */}
-      <Canvas style={{ width: "400px", height: "400px" }}>
-        <ambientLight intensity={0.5} />
+      <Canvas style={{ width: "200px", height: "200px" }}>
+        <ambientLight intensity={1} />
         <pointLight position={[10, 10, 10]} />
         <Cuboid color={color} />
       </Canvas>

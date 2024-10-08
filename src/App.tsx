@@ -32,9 +32,12 @@ function App() {
         <Header title="Feature 3: Point Annotations with DataCurve" />
         <DataCurveCanvas />
       </div>
+
       {/* Feature 4 */}
-      <Header title="Feature 4, 5 and 6: Cuboid Control" />
-      <CuboidCanvas />
+      <div>
+        <Header title="Feature 4, 5 and 6: Cuboid Control" />
+        <CuboidCanvas />
+      </div>
     </div>
   );
 }
