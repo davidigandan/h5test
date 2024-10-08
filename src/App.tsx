@@ -1,191 +1,24 @@
-import "@h5web/lib/dist/styles.css";
+import React, { useState } from "react";
+import "./styles/styles.css";
+import TrigCanvas from "./components/TrigCanvas";
+import DataCurveCanvas from "./components/DataCurveCanvas";
+import Header from "./components/Header";
 
-import { useState } from "react";
-
-import {
-  DefaultInteractions,
-  Line,
-  ResetZoomButton,
-  VisCanvas,
-  SelectionTool,
-  DataCurve,
-  Annotation,
-} from "@h5web/lib";
-
-function MyApp() {
-  // State Handling for function drawn
-  const [mathFunction, changeMathFunction] = useState("sine");
-
-  // State handling for annotations
+function App() {
+  const [mathFunction, setMathFunction] = useState("sine");
 
   const toggleFunction = () => {
-    changeMathFunction((prev) => {
-      return prev === "sine" ? "cosine" : "sine";
-    });
+    setMathFunction((prev) => (prev === "sine" ? "cosine" : "sine"));
   };
-
-  const generatePoints = (waveType = "sine", points = 360) => {
-    const xValues = Array.from({ length: points }, (_, i) => i);
-    const yValues = xValues.map((xValue) => {
-      return waveType === "sine"
-        ? Math.sin(xValue * (Math.PI / 180))
-        : Math.cos(xValue * (Math.PI / 180));
-    });
-    return [xValues, yValues];
-  };
-
-  const [xValues, yValues] = generatePoints(mathFunction);
-
-  const handleDataPointClick = (index: number, evt: PointerEvent) => {
-    console.log("Event:", evt);
-    console.log("Index:", index);
-  };
-
-  //State Handling for points highlighted
-  // const [selectedPoints, changeSelectedPoints] = useState({ x: 0, y: 0 });
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
-      <div>
-        <div>
-          <header
-            style={{
-              backgroundColor: "#f0f0f0",
-              padding: "1rem",
-              textAlign: "center",
-              position: "sticky",
-              top: 0,
-              zIndex: 1000,
-            }}
-          >
-            <h2>A Demo of Feature 1: Toggling Trig Functions</h2>
-          </header>
-        </div>
-
-        <div>
-          <VisCanvas
-            abscissaConfig={{
-              showGrid: true,
-              visDomain: [0, 360],
-            }}
-            ordinateConfig={{
-              showGrid: true,
-              visDomain: [-1, 1],
-            }}
-            title="H5Web/lib Demo with Trig Functions"
-          >
-            <DefaultInteractions />
-
-            <Line
-              abscissas={xValues}
-              color="hsla(240, 100%, 50%, 1)"
-              ordinates={yValues}
-              visible
-            />
-            <ResetZoomButton />
-
-            {/* Attempt at Slection Tool */}
-            <SelectionTool
-          id="my-selection-tool"
-          onSelectionStart={() => console.log("Selection started")}
-          onSelectionChange={(selection, rawSelection, isValid) => {
-            console.log("Selection changed:", selection, rawSelection, isValid);
-          }}
-          onSelectionEnd={(selection, isValid) => {
-            console.log("Selection ended:", selection, isValid);
-          }}
-          onValidSelection={(selection) => {
-            console.log("Valid selection made:", selection);
-          }}
-        >
-          {(selection, rawSelection, isValid) => (
-            <div>
-              <p>Current Selection: {JSON.stringify(selection)}</p>
-              <p>Raw Selection: {JSON.stringify(rawSelection)}</p>
-              <p>Is Valid: {isValid ? "Yes" : "No"}</p>
-            </div>
-          )}
-        </SelectionTool>
-          </VisCanvas>
-
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "flex-end",
-              marginBottom: "2rem",
-            }}
-          >
-            <button
-              style={{
-                marginTop: "1rem",
-                backgroundColor: "white",
-                border: "1px solid #ccc",
-                padding: "10px 20px",
-                cursor: "pointer",
-              }}
-              onClick={toggleFunction}
-            >
-              Toggle Wave
-            </button>
-          </div>
-        </div>
-      </div>
-      <div>
-        <header
-          style={{
-            backgroundColor: "#f0f0f0",
-            padding: "1rem",
-            textAlign: "center",
-            position: "sticky",
-            top: 0,
-            zIndex: 1000,
-          }}
-        >
-          <h2>A Demo of Feature 3: Datapoint Annotations with DataCurve</h2>
-        </header>
-        <div>
-          <VisCanvas
-            abscissaConfig={{
-              showGrid: true,
-              visDomain: [0, 40],
-            }}
-            ordinateConfig={{
-              showGrid: true,
-              visDomain: [0, 400],
-            }}
-            raycasterThreshold={6}
-            title="Choose a datapoint"
-          >
-            <DefaultInteractions />
-            <DataCurve
-              abscissas={[
-                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
-                18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33,
-                34, 35, 36, 37, 38, 39, 40,
-              ]}
-              color="blue"
-              curveType="LineAndGlyphs"
-              errors={[
-                10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
-                10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
-                10, 10, 10, 10, 10, 10, 10, 10, 10,
-              ]}
-              glyphType="Circle"
-              onDataPointClick={(index, evt) => console.log("trigger")}
-              ordinates={[
-                400, 361, 324, 289, 256, 225, 196, 169, 144, 121, 100, 81, 64,
-                49, 36, 25, 16, 9, 4, 1, 0, 1, 4, 9, 16, 25, 36, 49, 64, 81,
-                100, 121, 144, 169, 196, 225, 256, 289, 324, 361, 400,
-              ]}
-              visible
-            />
-
-            <ResetZoomButton />
-          </VisCanvas>
-        </div>
-      </div>
+      <Header title="A Demo of Feature 1: Toggling Trig Functions" />
+      <TrigCanvas mathFunction={mathFunction} toggleFunction={toggleFunction} />
+      <Header title="A Demo of Feature 3: Datapoint Annotations with DataCurve" />
+      <DataCurveCanvas />
     </div>
   );
 }
 
-export default MyApp;
+export default App;
