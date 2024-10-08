@@ -1,15 +1,23 @@
-import React, { useState } from "react";
-import { Canvas } from "@react-three/fiber";
-import { MeshProps } from "@react-three/fiber";
+import React, { useRef, useState } from "react";
+import { Canvas, MeshProps, useFrame } from "@react-three/fiber";
+import { Mesh } from "three";
 
 interface CuboidProps extends MeshProps {
   color: string; // Define the color prop type
 }
 
 const Cuboid: React.FC<CuboidProps> = ({ color }) => {
+  const meshRef = useRef<Mesh>(null);
+
+  useFrame(() => {
+    if (meshRef.current) {
+      meshRef.current.rotation.x += 0.05;
+    }
+  });
+
   return (
-    <mesh>
-      <boxGeometry args={[15, 4, 4]} />
+    <mesh ref={meshRef}>
+      <boxGeometry args={[4, 2, 1]} />
       <meshStandardMaterial color={color} />
     </mesh>
   );
