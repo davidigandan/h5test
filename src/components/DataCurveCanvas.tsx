@@ -3,9 +3,9 @@ import {
   VisCanvas,
   DataCurve,
   DefaultInteractions,
-  ResetZoomButton,
   GlyphType,
   CurveType,
+  ResetZoomButton,
 } from "@h5web/lib";
 
 const DataCurveCanvas: React.FC = () => {
@@ -32,7 +32,6 @@ const DataCurveCanvas: React.FC = () => {
         color="blue"
         curveType={CurveType.LineAndGlyphs}
         visible
-        onDataPointClick={(index, evt) => console.log("trigger")}
       />
       <ResetZoomButton />
     </VisCanvas>

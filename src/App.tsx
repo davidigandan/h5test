@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./styles/styles.css";
 import TrigCanvas from "./components/TrigCanvas";
 import DataCurveCanvas from "./components/DataCurveCanvas";
 import Header from "./components/Header";
+import CuboidCanvas from "./components/CuboidCanvas";
 
 function App() {
   const [mathFunction, setMathFunction] = useState("sine");
@@ -12,17 +13,28 @@ function App() {
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
+    <div style={{ display: "flex", flexDirection: "column" }}>
       {/* Feature 1 */}
-      <Header title="Feature 1: Toggling Trig Functions" />
-      <TrigCanvas mathFunction={mathFunction} toggleFunction={toggleFunction} />
-
+      <div>
+        <Header title="Feature 1: Toggling Trig Functions" />
+        <TrigCanvas
+          mathFunction={mathFunction}
+          toggleFunction={toggleFunction}
+        />
+      </div>
       {/* Feature 2 */}
-      <Header title="Feature 2: Choosing points with Selection Tool" />
+      <div>
+        <Header title="Feature 2: Choosing points with Selection Tool" />
+      </div>
 
       {/* Feature 3 */}
-      <Header title="Feature 3: Datapoint Annotations with DataCurve" />
-      <DataCurveCanvas />
+      <div>
+        <Header title="Feature 3: Point Annotations with DataCurve" />
+        <DataCurveCanvas />
+      </div>
+      {/* Feature 4 */}
+      <Header title="Feature 4, 5 and 6: Cuboid Control" />
+      <CuboidCanvas />
     </div>
   );
 }
