@@ -2,15 +2,16 @@ import React, { useRef, useState } from "react";
 import { Canvas, MeshProps, useFrame } from "@react-three/fiber";
 import { Mesh } from "three";
 
+// Cuboid
 interface CuboidProps extends MeshProps {
   color: string; // Define the color prop type
+  isSpinning: boolean;
 }
-
-const Cuboid: React.FC<CuboidProps> = ({ color }) => {
+const Cuboid: React.FC<CuboidProps> = ({ color, isSpinning }) => {
   const meshRef = useRef<Mesh>(null);
 
   useFrame(() => {
-    if (meshRef.current) {
+    if (meshRef.current && isSpinning) {
       meshRef.current.rotation.x += 0.05;
     }
   });
@@ -23,8 +24,13 @@ const Cuboid: React.FC<CuboidProps> = ({ color }) => {
   );
 };
 
+// Cuboid Canvas
 const CuboidCanvas: React.FC = () => {
   const [color, setColor] = useState<string>("#ff0000");
+  const [isSpinning, setIsSpinning] = useState(true);
+  const handleToggleSpin = () => {
+    setIsSpinning((prevState) => !prevState);
+  };
 
   const handleColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setColor(event.target.value);
@@ -39,8 +45,11 @@ const CuboidCanvas: React.FC = () => {
       <Canvas style={{ width: "200px", height: "200px" }}>
         <ambientLight intensity={1} />
         <pointLight position={[10, 10, 10]} />
-        <Cuboid color={color} />
+        <Cuboid color={color} isSpinning={isSpinning} />
       </Canvas>
+      <button onClick={handleToggleSpin}>
+        {isSpinning ? "Stop Spin" : "Start Spin"}
+      </button>
     </div>
   );
 };
