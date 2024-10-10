@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Canvas, MeshProps, useFrame } from "@react-three/fiber";
 import { Mesh } from "three";
+import { OrbitControls } from "@react-three/drei";
 
 // Cuboid
 interface CuboidProps extends MeshProps {
@@ -42,10 +43,11 @@ const CuboidCanvas: React.FC = () => {
     >
       <input type="color" value={color} onChange={handleColorChange} />
       {/* Canvas for the Cuboid */}
-      <Canvas style={{ width: "200px", height: "200px" }}>
+      <Canvas >
         <ambientLight intensity={1} />
         <pointLight position={[10, 10, 10]} />
         <Cuboid color={color} isSpinning={isSpinning} />
+        <OrbitControls enablePan={true} enableZoom={true} enableRotate={true} />
       </Canvas>
       <button onClick={handleToggleSpin}>
         {isSpinning ? "Stop Spin" : "Start Spin"}
