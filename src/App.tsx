@@ -25,7 +25,7 @@ function App() {
       </div>
       {/* Feature 2 */}
       <div>
-        <Header title="Feature 2: Choosing points with Selection Tool" />
+        {/* <Header title="Feature 2: Choosing points with Selection Tool" /> */}
       </div>
 
       {/* Feature 3 */}

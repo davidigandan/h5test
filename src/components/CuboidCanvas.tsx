@@ -2,14 +2,19 @@ import React, { useRef, useState } from "react";
 import { Canvas, MeshProps, useFrame } from "@react-three/fiber";
 import { Mesh } from "three";
 import { OrbitControls } from "@react-three/drei";
+import { VisCanvas } from "@h5web/lib";
 
-// Cuboid
+// Cuboids
 interface CuboidProps extends MeshProps {
-  color: string; // Define the color prop type
+  color: string;
   isSpinning1: boolean | null;
   isSpinning2: boolean | null;
 }
-const Cuboid: React.FC<CuboidProps> = ({ color, isSpinning1, isSpinning2 }) => {
+const Cuboids: React.FC<CuboidProps> = ({
+  color,
+  isSpinning1,
+  isSpinning2,
+}) => {
   const meshRef1 = useRef<Mesh>(null);
   const meshRef2 = useRef<Mesh>(null);
 
@@ -43,11 +48,12 @@ const Cuboid: React.FC<CuboidProps> = ({ color, isSpinning1, isSpinning2 }) => {
   );
 };
 
-// Cuboid Canvas
+// Cuboids Canvas
 const CuboidCanvas: React.FC = () => {
   const [color, setColor] = useState<string>("#ff0000");
   const [isSpinning1, setIsSpinning1] = useState(true);
   const [isSpinning2, setIsSpinning2] = useState(true);
+
   const handleToggleSpin1 = () => {
     setIsSpinning1((prevState) => !prevState);
   };
@@ -64,17 +70,31 @@ const CuboidCanvas: React.FC = () => {
       style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
       <input type="color" value={color} onChange={handleColorChange} />
-      {/* Canvas for the Cuboid */}
-      <Canvas>
-        <ambientLight intensity={1} />
+      {/* Canvas for the Cuboids */}
+
+      <VisCanvas
+        abscissaConfig={{
+          isIndexAxis: true,
+          showGrid: true,
+          visDomain: [0, 3],
+        }}
+        ordinateConfig={{
+          isIndexAxis: true,
+          showGrid: true,
+          visDomain: [50, 100],
+        }}
+      >
+
+        {/* use viscanvas context to determin the size of the invariant component */}
+        <ambientLight intensity={2} />
         <pointLight position={[10, 10, 10]} />
-        <Cuboid
+        <Cuboids
           color={color}
           isSpinning1={isSpinning1}
           isSpinning2={isSpinning2}
         />
         <OrbitControls enablePan={true} enableZoom={true} enableRotate={true} />
-      </Canvas>
+      </VisCanvas>
       <button onClick={handleToggleSpin1}>
         {isSpinning1 ? "Stop Spin" : "Start Spin"}
       </button>

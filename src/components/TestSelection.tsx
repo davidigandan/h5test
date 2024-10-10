@@ -19,7 +19,7 @@ const TestSelection: React.FC = () => {
       <SelectionTool
         validate={({ html }) => {
           console.log("validate called with html:", html); // Should log
-          return Box.fromPoints(...html).hasMinSize(1);
+          return true; //Box.fromPoints(...html).hasMinSize(1);
         }}
         onSelectionChange={(selection) => {
           console.log("Selection Changed:", selection);
