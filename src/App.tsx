@@ -4,6 +4,7 @@ import TrigCanvas from "./components/TrigCanvas";
 import DataCurveCanvas from "./components/DataCurveCanvas";
 import Header from "./components/Header";
 import CuboidCanvas from "./components/CuboidCanvas";
+import TestSelection from "./components/TestSelection";
 
 function App() {
   const [mathFunction, setMathFunction] = useState("sine");
@@ -37,6 +38,11 @@ function App() {
       <div>
         <Header title="Feature 4, 5 and 6: Cuboid Control" />
         <CuboidCanvas />
+      </div>
+
+      <div>
+        <Header title="Test Selection" />
+        <TestSelection />
       </div>
     </div>
   );

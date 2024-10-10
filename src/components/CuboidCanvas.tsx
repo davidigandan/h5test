@@ -6,31 +6,53 @@ import { OrbitControls } from "@react-three/drei";
 // Cuboid
 interface CuboidProps extends MeshProps {
   color: string; // Define the color prop type
-  isSpinning: boolean;
+  isSpinning1: boolean | null;
+  isSpinning2: boolean | null;
 }
-const Cuboid: React.FC<CuboidProps> = ({ color, isSpinning }) => {
-  const meshRef = useRef<Mesh>(null);
+const Cuboid: React.FC<CuboidProps> = ({ color, isSpinning1, isSpinning2 }) => {
+  const meshRef1 = useRef<Mesh>(null);
+  const meshRef2 = useRef<Mesh>(null);
 
   useFrame(() => {
-    if (meshRef.current && isSpinning) {
-      meshRef.current.rotation.x += 0.05;
+    if (meshRef1.current && isSpinning1) {
+      meshRef1.current.rotation.x += 0.05;
+    }
+
+    if (meshRef2.current && isSpinning2) {
+      meshRef2.current.rotation.x += 0.05;
     }
   });
 
   return (
-    <mesh ref={meshRef}>
-      <boxGeometry args={[4, 2, 1]} />
-      <meshStandardMaterial color={color} />
-    </mesh>
+    <>
+      <mesh position={[-6, 0, 0]} ref={meshRef1}>
+        <boxGeometry args={[4, 2, 1]} />
+        <meshStandardMaterial color={color} />
+      </mesh>
+
+      <mesh position={[6, 0, 0]} ref={meshRef2}>
+        <boxGeometry args={[4, 2, 1]} />
+        <meshStandardMaterial color={color} />
+      </mesh>
+
+      <mesh position={[0, 3, 0]}>
+        <boxGeometry args={[4, 2, 1]} />
+        <meshStandardMaterial color={color} />
+      </mesh>
+    </>
   );
 };
 
 // Cuboid Canvas
 const CuboidCanvas: React.FC = () => {
   const [color, setColor] = useState<string>("#ff0000");
-  const [isSpinning, setIsSpinning] = useState(true);
-  const handleToggleSpin = () => {
-    setIsSpinning((prevState) => !prevState);
+  const [isSpinning1, setIsSpinning1] = useState(true);
+  const [isSpinning2, setIsSpinning2] = useState(true);
+  const handleToggleSpin1 = () => {
+    setIsSpinning1((prevState) => !prevState);
+  };
+  const handleToggleSpin2 = () => {
+    setIsSpinning2((prevState) => !prevState);
   };
 
   const handleColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,14 +65,21 @@ const CuboidCanvas: React.FC = () => {
     >
       <input type="color" value={color} onChange={handleColorChange} />
       {/* Canvas for the Cuboid */}
-      <Canvas >
+      <Canvas>
         <ambientLight intensity={1} />
         <pointLight position={[10, 10, 10]} />
-        <Cuboid color={color} isSpinning={isSpinning} />
+        <Cuboid
+          color={color}
+          isSpinning1={isSpinning1}
+          isSpinning2={isSpinning2}
+        />
         <OrbitControls enablePan={true} enableZoom={true} enableRotate={true} />
       </Canvas>
-      <button onClick={handleToggleSpin}>
-        {isSpinning ? "Stop Spin" : "Start Spin"}
+      <button onClick={handleToggleSpin1}>
+        {isSpinning1 ? "Stop Spin" : "Start Spin"}
+      </button>
+      <button onClick={handleToggleSpin2}>
+        {isSpinning2 ? "Stop Spin" : "Start Spin"}
       </button>
     </div>
   );

@@ -8,9 +8,10 @@ import {
   SvgElement,
   SvgRect,
   Box,
+  Selection,
 } from "@h5web/lib";
 import { generatePoints } from "../utils/mathUtils";
-// import { getTitleForSelection } from './utils';
+import { getTitleForSelection } from "../utils/utils.ts";
 
 interface TrigCanvasProps {
   mathFunction: string;
@@ -23,8 +24,9 @@ const TrigCanvas: React.FC<TrigCanvasProps> = ({
 }) => {
   const [xValues, yValues] = generatePoints(mathFunction);
 
-  const [activeSelection, setActiveSelection] = useState<Selection | undefined>(undefined);
-
+  const [activeSelection, setActiveSelection] = useState<Selection | undefined>(
+    undefined
+  );
 
   return (
     <div>

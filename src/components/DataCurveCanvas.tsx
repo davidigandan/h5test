@@ -6,15 +6,26 @@ import {
   GlyphType,
   CurveType,
   ResetZoomButton,
+  SelectionTool,
+  Box,
+  SvgElement,
+  SvgRect,
+  Selection,
 } from "@h5web/lib";
+import { useState } from "react";
+import { getTitleForSelection } from "../utils/utils";
 
 const DataCurveCanvas: React.FC = () => {
+  const [activeSelection, setActiveSelection] = useState<Selection | undefined>(
+    undefined
+  );
+
   return (
     <VisCanvas
       abscissaConfig={{ showGrid: true, visDomain: [0, 40] }}
       ordinateConfig={{ showGrid: true, visDomain: [0, 400] }}
       raycasterThreshold={6}
-      title="Choose a Datapoint"
+      title={getTitleForSelection(activeSelection?.data)}
     >
       <DefaultInteractions />
       <DataCurve
@@ -34,6 +45,30 @@ const DataCurveCanvas: React.FC = () => {
         visible
       />
       <ResetZoomButton />
+      <SelectionTool
+        validate={({ html }) => {
+          return Box.fromPoints(...html).hasMinSize(0);
+        }}
+        onSelectionChange={setActiveSelection}
+        onSelectionEnd={() => setActiveSelection(undefined)}
+      >
+        {({ html: htmlSelection }, _, isValid) => {
+          console.log("HTML Selection:", htmlSelection);
+          e;
+          return (
+            <SvgElement>
+              <SvgRect
+                coords={htmlSelection}
+                fill={isValid ? "teal" : "orangered"}
+                fillOpacity={0.5}
+                stroke={isValid ? "teal" : "orangered"}
+                strokeWidth={2}
+                strokePosition="inside"
+              />
+            </SvgElement>
+          );
+        }}
+      </SelectionTool>
     </VisCanvas>
   );
 };
