@@ -29,7 +29,7 @@ function App() {
       </div>
 
       {/* Feature 3 */}
-      <div>
+      <div style={{ display: "grid" }}>
         <Header title="Feature 3: Point Annotations with DataCurve" />
         <DataCurveCanvas />
       </div>
@@ -40,8 +40,8 @@ function App() {
         <CuboidCanvas />
       </div>
 
-      <div>
-        <Header title="Test Selection" />
+      <div style={{ display: "flex", width: "500px", height: "500px" }}>
+        {/* <Header title="Test Selection" /> */}
         <TestSelection />
       </div>
     </div>

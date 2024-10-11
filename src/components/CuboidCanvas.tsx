@@ -74,18 +74,17 @@ const CuboidCanvas: React.FC = () => {
 
       <VisCanvas
         abscissaConfig={{
-          isIndexAxis: true,
-          showGrid: true,
+          isIndexAxis: false,
+          showGrid: false,
           visDomain: [0, 3],
         }}
         ordinateConfig={{
-          isIndexAxis: true,
-          showGrid: true,
+          isIndexAxis: false,
+          showGrid: false,
           visDomain: [50, 100],
         }}
       >
-
-        {/* use viscanvas context to determin the size of the invariant component */}
+        {/* use viscanvas context to determin the size of the invariant component */}z
         <ambientLight intensity={2} />
         <pointLight position={[10, 10, 10]} />
         <Cuboids
