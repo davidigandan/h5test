@@ -14,6 +14,7 @@ import {
 } from "@h5web/lib";
 import { useState } from "react";
 import { getTitleForSelection } from "../utils/utils";
+import { MySelectionCanvas } from "./MySelectionCanvas";
 
 const DataCurveCanvas: React.FC = () => {
   const [activeSelection, setActiveSelection] = useState<Selection | undefined>(
@@ -29,33 +30,7 @@ const DataCurveCanvas: React.FC = () => {
     >
       <DefaultInteractions />
       <ResetZoomButton />
-      <SelectionTool
-        validate={({ html }) => {
-          return Box.fromPoints(...html).hasMinSize(10);
-        }}
-        onSelectionStart={() => {
-          console.log("started selection");
-        }}
-        onSelectionChange={setActiveSelection}
-        onSelectionEnd={() => setActiveSelection(undefined)}
-      >
-        {({ html: htmlSelection }, _, isValid) => {
-          console.log("HTML Selection:", htmlSelection);
-
-          return (
-            <SvgElement>
-              <SvgRect
-                coords={htmlSelection}
-                fill={isValid ? "teal" : "orangered"}
-                fillOpacity={0.5}
-                stroke={isValid ? "teal" : "orangered"}
-                strokeWidth={2}
-                strokePosition="inside"
-              />
-            </SvgElement>
-          );
-        }}
-      </SelectionTool>
+  
       <DataCurve
         abscissas={[
           0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,

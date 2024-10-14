@@ -1,10 +1,11 @@
 import { useState } from "react";
 import "./styles/styles.css";
 import TrigCanvas from "./components/TrigCanvas";
-import DataCurveCanvas from "./components/DataCurveCanvas";
+// import DataCurveCanvas from "./components/DataCurveCanvas";
 import Header from "./components/Header";
 import CuboidCanvas from "./components/CuboidCanvas";
-import TestSelection from "./components/TestSelection";
+
+import { MySelectionCanvas } from "./components/MySelectionCanvas";
 
 function App() {
   const [mathFunction, setMathFunction] = useState("sine");
@@ -23,15 +24,12 @@ function App() {
           toggleFunction={toggleFunction}
         />
       </div>
-      {/* Feature 2 */}
-      <div>
-        {/* <Header title="Feature 2: Choosing points with Selection Tool" /> */}
-      </div>
 
-      {/* Feature 3 */}
+      {/* Feature 2 & 3 */}
       <div style={{ display: "grid" }}>
-        <Header title="Feature 3: Point Annotations with DataCurve" />
-        <DataCurveCanvas />
+        <Header title="Feature 2 & 3: Selection Tool and Datacurve" />
+        <MySelectionCanvas />
+        {/* <DataCurveCanvas /> */}
       </div>
 
       {/* Feature 4 */}
@@ -42,7 +40,7 @@ function App() {
 
       <div style={{ display: "flex", width: "500px", height: "500px" }}>
         {/* <Header title="Test Selection" /> */}
-        <TestSelection />
+        {/* <TestSelection /> */}
       </div>
     </div>
   );
