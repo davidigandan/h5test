@@ -5,7 +5,7 @@ import TrigCanvas from "./components/TrigCanvas";
 import Header from "./components/Header";
 import CuboidCanvas from "./components/CuboidCanvas";
 
-import { MySelectionCanvas } from "./components/MySelectionCanvas";
+import MySelectionCanvas from "./components/MySelectionCanvas";
 
 function App() {
   const [mathFunction, setMathFunction] = useState("sine");
